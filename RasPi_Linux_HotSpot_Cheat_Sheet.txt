@@ -1,0 +1,67 @@
+# NOTE: Any line starting with # is a comment for the command above it.
+
+
+#####################
+# CONFIGURE A HOTSPOT
+#####################
+
+
+cat /proc/sys/net/ipv4/ip_forward
+# check if IP forwarding is enabled
+
+echo 1 > /proc/sys/net/ipv4/ip_forward  
+# if off then enable it
+
+nmcli con up "MyCoolWiFi"
+# activates the Wi-Fi connection to the network 'MyCoolWiFi'
+
+iptables -t nat -A POSTROUTING -o wlan1 -j MASQUERADE  
+# applies NAT for outbound traffic on wlan1
+					
+iptables -A FORWARD -i wlan0 -o wlan1 -j ACCEPT
+# allows forwarding from wlan0 (hotspot) to wlan1 (internet)
+			
+iptables -A FORWARD -i wlan1 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# allows established connections to return
+
+systemctl restart NetworkManager  
+# restarts the NetworkManager service to apply network configuration changes
+
+reboot
+# reboots the system to apply all changes and configurations
+
+nmcli con show --active
+# lists active network connections (to confirm)
+
+nmcli d wifi hotspot ifname wlan0 ssid "Lazybones" password "abc-123456"  
+# creates a Wi-Fi hotspot on wlan0 with specified SSID and password
+
+nmcli con modify Hotspot-1 wifi-sec.pmf disable  
+# disables Protected Management Frames (PMF) on the hotspot (try this if you have issues)
+
+nmcli con modify Hotspot-1 wifi-sec.pmf enable  
+# enables Protected Management Frames (PMF) (undo the disable command, if it does not solve issue)
+
+nmcli con show --active  
+# lists active network connections (to confirm)
+
+
+########################
+# DE-CONFIGURE A HOTSPOT
+########################
+
+
+echo 1 > /proc/sys/net/ipv4/ip_forward  
+# enables IP forwarding (leaving for reading convinience, command below undoes this)
+
+echo 0 > /proc/sys/net/ipv4/ip_forward  
+# disables IP forwarding
+
+iptables -t nat -D POSTROUTING -o wlan1 -j MASQUERADE
+# removes NAT rule for outbound traffic on wlan1
+
+iptables -D FORWARD -i wlan0 -o wlan1 -j ACCEPT
+# removes forwarding rule from wlan0 (hotspot) to wlan1 (internet)
+
+iptables -D FORWARD -i wlan1 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# removes rule for established connections to return

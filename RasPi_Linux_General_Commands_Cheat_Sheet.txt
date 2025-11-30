@@ -1,0 +1,70 @@
+# Settings -> Preferences -> Indentation -> Tab Size 4 to match Notepad (Windows Notepad default is 8?)
+
+-------------------     				-----------
+Command / Keystroke						Description
+-------------------     				-----------
+
+Ctrl + Alt + F7							GUI
+Ctrl + Alt + F2							CMD
+Ctrl + K								delete text to the right
+Ctrl + U								delete text to the left
+
+uname -a								show Linux kernel info
+uname -r 								kernel version
+dpkg --print-architecture				prints architecture
+lsb_release -a							show Linux distribution info (OS)
+
+sudo pcmanfm							File explorer w/ Root
+
+sudo apt update && sudo apt upgrade		update & upgrade
+sudo apt autoremove						remove unused packages
+sudo apt autoclean						cleans packages?
+
+sudo rm -rf /tmp/* /tmp/.[^.]*			cleans temp files
+sudo rm -rf /var/tmp/* /var/tmp/.[^.]*	cleans temp files
+rm -rf ~/.cache/*						cleans temp files
+
+nmtui									connect to network, disconnect or forget
+
+ip ad									show IP address info
+iwconfig								show network adapters
+dhclient -r eth0						release ip
+dhclient eth0							renew ip
+
+ifconfig wlan0 down						turn off network adapter / disable wifi
+ifconfig wlan0 up						turn on network adapter / enable wifi
+
+systemctl status NetworkManager			show NetworkManager status
+systemctl restart NetworkManager		restart NetworkManager service
+systemctl start NetworkManager			start NetworkManager service
+systemctl stop NetworkManager			stop NetworkManager service
+systemctl enable NetworkManager			enable NetworkManager at boot
+
+mkdir 									create a directory
+rm -r /path/to/directory				remove directory and files
+rm filename1 filename2					delete file or files
+rm -rf directory						remove directory its files
+mv 										move a directory or file
+ls 										list files
+ls -la									list files and hidden
+cat										display contents of a file
+nano									edits a file
+pwd 									current directory
+cd ..									set current directory one up folder
+su										switch to root
+passwd  								set up root password
+passwd <username>						change password for user
+df -h									see free disk space
+logout 									signout
+reboot									restart		
+shutdown -r now							restart		
+shutdown -h now							shut down
+
+ps aux | grep apt						get processes
+kill -9 27014							kill a process
+
+chmod 755 filename						set owner read/write/execute and others read/execute
+chown user:group filename				change file owner and group
+whoami									shows your username
+groups									shows all user groups
+id -gn									shows your user group
